@@ -9,7 +9,7 @@
   if (isset($_SESSION["username"]) || isset($_SESSION["role"])) {
     $_SESSION['notification'] = [
       'type' => 'danger',
-      'message' =. 'Silakan Logout Terlebih Dahulu!'
+      'message' => 'Silakan Logout Terlebih Dahulu!'
     ];
     header('location: ../dashboard.php');
   }
