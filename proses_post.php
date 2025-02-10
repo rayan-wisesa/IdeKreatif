@@ -6,14 +6,14 @@ include 'config.php';
 session_start();
 
 // Mendapatkan ID pengguna dari sesi
-$userID = $_SESSION["user_id"];
+$userId = $_SESSION["user_id"];
 
 // Menangani form untuk menambahkan postingan baru
 if (isset($_POST['simpan'])) {
     // Mendapatkan data dari form
     $postTitle = $_POST["post_title"];
     $content = $_POST["content"];
-    $categoriId = $_POST["category_id"];
+    $categoryId = $_POST["category_id"];
 
     // Mengatur ditektori penyimpanan file gambar
     $imageDir = "assets/img/uploads/";
@@ -48,6 +48,6 @@ if (isset($_POST['simpan'])) {
     }
 
     // Arahkan ke halaman dashboard setelah selesai
-    header('location: dashboard');
+    header('location: dashboard.php');
     exit();
 }

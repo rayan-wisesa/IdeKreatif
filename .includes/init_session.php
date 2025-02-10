@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+$userId = $_SESSION["user_id"];
 $name = $_SESSION["name"];
 $role = $_SESSION["role"];
 // Ambil notifikasi jika ada, kemudian hapus dari sesi
