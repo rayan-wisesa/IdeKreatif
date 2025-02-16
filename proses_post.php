@@ -73,3 +73,59 @@ if(isset($_POST['delete'])) {
         ];
     }
 }
+
+// Menangani pembaruan data postingan
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
+    // Menangkap data dari form
+    $postId = $_POST['post_id'];
+    $postTitle = $_POST['post_title'];
+    $content = $_POST['content'];
+    $categoryId = $_POST['category_id'];
+    $imageDir = "assets/img/uploads/"; // Direktori penyimpanan gambar
+    // Periksa apakah file gambar baru diunggah
+if (!empty($_FILES['image_path']['name'])) {
+    $imageName = $_FILES['image_path']['name'];
+    $imagePath = $imageDir . $imageName;
+
+    // Pindahkan file baru ke direktori tujuan
+    move_uploaded_file($_FILES['image_path']['tmp_name'], $imagePath);
+
+    // Hapus gambar lama
+    $queryOldImage = "SELECT image_path FROM posts WHERE id_post = $postId";
+    $resultOldImage = $conn->query($queryOldImage);
+    if ($resultOldImage->num_rows > 0) {
+        $oldImage = $resultOldImage->fetch_assoc()['image_path'];
+        if (file_exists($oldImage)) { // Menghapus file lama
+            unlink($oldImage);
+        }
+    }
+} else {
+    // Jika tidak ada file baru, gunakan gambar lama
+    $queryPathQuery = "SELECT image_path FROM posts WHERE id_post = $postId";
+    $result = $conn->query($queryPathQuery);
+    if ($result->num_rows > 0) {
+        $imagePath = $result->fetch_assoc()['image_path'];
+    }
+}
+
+// Update data post dengan atau tanpa gambar
+$queryUpdate = "UPDATE posts SET post_title = '$postTitle', 
+content = '$content', category_id = '$categoryId', 
+image_path = '$imagePath' WHERE id_post = '$postId'";
+
+if ($conn->query($queryUpdate) === TRUE) {
+    $_SESSION['notification'] = [
+        'type' => 'success',
+        'message' => 'Postingan berhasil diperbarui.'
+    ];
+} else {
+    $_SESSION['notification'] = [
+        'type' => 'danger',
+        'message' => 'Gagal memperbarui postingan.'
+    ];
+}
+
+// Arahkan ke halaman dashboard
+header('Location: dashboard.php');
+exit();
+}
