@@ -78,7 +78,7 @@ include '.includes/toast_notification.php';
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="proses-post.php" method="POST">
+                                                <form action="proses_post.php" method="POST">
                                                     <div>
                                                         <p>Tindakan ini tidak bisa dibatalkan.</p>
                                                         <input type="hidden" name="postID" value="<?= $post['id_post']; ?>">

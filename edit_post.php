@@ -3,7 +3,7 @@
 include 'config.php';
 
 // Memasukkan header halaman
-include 'includes/header.php';
+include '.includes/header.php';
 
 // Mengambil ID postingan yang akan diedit dari parameter URL
 // /edit_post.php?post_id=
@@ -96,5 +96,5 @@ if ($result->num_rows > 0) {
 
 <?php
 // Memasukkan footer halaman
-include 'includes/footer.php';
+include '.includes/footer.php';
 ?>
